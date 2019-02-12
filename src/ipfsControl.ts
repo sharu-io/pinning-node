@@ -17,7 +17,7 @@ const stdConfig = {
         "API": "/ip4/127.0.0.1/tcp/5004",
         "Gateway": "/ip4/127.0.0.1/tcp/8380",
     },
-    "Bootstrap": [
+    "Bootstrap": [            
         '/ip4/104.236.176.52/tcp/4001/ipfs/QmSoLnSGccFuZQJzRadHn95W2CrSFmZuTdDWP8HXaHca9z',
         '/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ',
         '/ip4/104.236.179.241/tcp/4001/ipfs/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM',
