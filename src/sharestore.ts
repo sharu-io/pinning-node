@@ -11,12 +11,12 @@ export interface Share{
     pinned: boolean;
 }
 export interface Pointer{
-    pointer: number;
+    pointer: string;
     shares: Share[];
 }
 export interface Hash{
     hash: string;
-    pointer: number;
+    pointer: string;
 }
 export interface Database{
     pointers: Pointer[];
@@ -28,7 +28,7 @@ export class ShareStore {
     readonly FILE = 'database.json';
     data : Database;
 
-    public unpinOrders  = new BehaviorSubject<{pointer: number, hash: string, doppelbodenHash?: string}>(null);
+    public unpinOrders  = new BehaviorSubject<{pointer: string, hash: string, doppelbodenHash?: string}>(null);
     
     constructor(private basepath: string) {
         this.DBPATH = basepath + path.sep + this.FILE;
@@ -71,7 +71,7 @@ export class ShareStore {
             });
         }
     }
-    public remove(toRemove : {pointer: number, hash: string}){
+    public remove(toRemove : {pointer: string, hash: string}){
         const share = this.data.pointers.find(p => p.pointer === toRemove.pointer);
         if (share){
             share.shares = share.shares.filter(f => f.hash !== toRemove.hash);

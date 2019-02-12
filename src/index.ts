@@ -1,6 +1,6 @@
 import * as ipfsControl from './ipfsControl';
 import * as exitHook from 'async-exit-hook';
-import { Contract, providers } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import * as fs from 'fs';
 import { promisify } from 'util';
 import { StatisticsService } from './statistics.service';
@@ -113,7 +113,8 @@ async function onSettingsAssigned(owner: string, oldHash: string, newHash: strin
         ipfsService.removePin(oldHash);
     }
 }
-async function onUpdated(pointer, oldHash: string, newHash, updater, event) {
+async function onUpdated(pointer: BigNumber, oldHash: string, newHash, updater, event) {
+    const pointerAsHex = pointer.toHexString();
     console.log(`${(new Date()).toString()} - Event UpdatedShare received for pointer: ${pointer}, old hash: ${oldHash} to new hash: ${newHash}, updater: ${updater}`);
     let cacheIt: boolean; // undefined: nichts damit machen, true: komplett speichern, false: nur bis zu einer gewissen sonst sonst doppelboden
     if (same(myConfig.mode, Mode.FullNode) || (same(myConfig.mode, Mode.Personal) && updater === myConfig.wallet)) {
@@ -141,7 +142,7 @@ async function onUpdated(pointer, oldHash: string, newHash, updater, event) {
             doppelbodenHash = await ipfsService.getDoppelboden(newHash);
         }
 
-        sharestore.shareUpdate(pointer, newHash, event.blockNumber, oldHash, doppelbodenHash);
+        sharestore.shareUpdate(pointerAsHex, newHash, event.blockNumber, oldHash, doppelbodenHash);
         if (cacheIt) {
             success = await ipfsService.createPin(newHash);
         } else {
@@ -149,7 +150,7 @@ async function onUpdated(pointer, oldHash: string, newHash, updater, event) {
         }
 
         if (success) {
-            await sharestore.pinned(pointer, newHash);
+            sharestore.pinned(pointerAsHex, newHash);
             console.log(`${(new Date()).toString()} - Updated old hash: ${oldHash} to new hash: ${newHash}`);
         } else {
             console.log(`${(new Date()).toString()} - Error while updating old hash: ${oldHash} to new hash: ${newHash}`);
