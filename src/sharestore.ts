@@ -48,7 +48,7 @@ export class ShareStore {
         }
     }
 
-    public async shareUpdate(pointer: number, hash: string, block: number, oldHash?: string, doppelbodenHash?: string) {
+    public shareUpdate(pointer: string, hash: string, block: number, oldHash?: string, doppelbodenHash?: string) {
         let existingPointer = this.data.pointers.find(p => p.pointer === pointer);
         if (!existingPointer){
             existingPointer = {pointer, shares: []};
@@ -58,7 +58,7 @@ export class ShareStore {
 
         this.data.hashes.push({hash, pointer});
     }
-    public async pinned(pointer: number, hash: string){
+    public pinned(pointer: string, hash: string){
         let existingPointer = this.data.pointers.find(p => p.pointer === pointer);
         if (existingPointer){
             const share = existingPointer.shares.find(s => s.hash === hash);
