@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <title>sharu pinning configuration machine</title>
+</head>
+
+<body class="bg-light">
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="./js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="./js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="./js/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/config"
+            }).then(function (data) {
+                $('#currentConfig').append(data);
+            });
+            $.ajax({
+                url: "/config/mode"
+            }).then(function (data) {
+                $('input:radio[name="mode"]').filter('[value=' + data + ']').attr('checked', true);
+                console.log("the data: >" + data + "<");
+                if (data === "3") {
+                    console.log("should be enabled");
+                    $('#wallet').attr('disabled', false);
+                } else {
+                    $('input:text[name="wallet"]').attr('disabled', true);
+                }
+            });
+            $.ajax({
+                url: "/config/wallet"
+            }).then(function (data) {
+                $('input:text[name="wallet"]').attr('value', data);
+            });
+            $('#saveConfig').click(function () {
+                console.log("was called!");
+                const newMode = $('input:radio[name="mode"]').filter(":checked").attr('value');
+                const newWallet = $('#wallet').val();
+                $.post("/config", {mode: newMode, wallet: newWallet});
+            });
+            $('#halfNode').click(function () {
+                $('#wallet').attr('disabled', true);
+            });
+            $('#fullNode').click(function () {
+                $('#wallet').attr('disabled', true);
+            });
+            $('#personal').click(function () {
+                $('#wallet').attr('disabled', false);
+            });
+
+        });
+    </script>
+
+    <div class="container">
+        <div class="row">
+            <h1>sharu pinning config machine</h1>
+            <img style="position: absolute; right: 20px; width: 20%" src="./assets/logo3.png" alt="" />
+        </div>
+        <div class="row">
+            <h2>Current config</h2>
+        </div>
+        <div class="row">
+            <p id="currentConfig"></p>
+        </div>
+        <div class="row">
+            <h2>Change config</h2>
+        </div>
+        <div class="row">
+            <h4 class="mb-3">Mode</h4>
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="fullNode" name="mode" value="0" type="radio">
+                    <label for="fullNode">Full node</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="halfNode" name="mode" value="1" type="radio">
+                    <label for="halfNode">Half node</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="personal" name="mode" value="2" type="radio">
+                    <label for="personal">Personal</label>
+                </div>
+            </div>
+            <div>
+
+                <label for="wallet">Wallet</label>
+                <input type="text" class="form-control" id="wallet" name="wallet" placeholder="" required="">
+                <button id="saveConfig" class="btn btn-primary btn-lg btn-block">FEUER</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
