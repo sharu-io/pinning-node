@@ -139,7 +139,7 @@ async function onUpdated(pointer: BigNumber, oldHash: string, newHash, updater, 
         let success : boolean;
         let doppelbodenHash: string = null;
 
-        if (cacheIt) {
+        if (!cacheIt) {
             doppelbodenHash = await ipfsService.getDoppelboden(newHash);
         }
 
