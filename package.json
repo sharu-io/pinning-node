@@ -20,11 +20,9 @@
     "ipfs": "^0.34.4",
     "ipfsd-ctl": "^0.40.0",
     "rxjs": "^6.4.0",
-    "sqlite3": "^4.0.6",
     "truffle-contract": "^3.0.6",
     "ts-node": "^7.0.1",
-    "typescript": "^3.1.6",
-    "web3": "^1.0.0-beta.36"
+    "typescript": "^3.1.6"
   },
   "devDependencies": {
     "rxjs-tslint": "^0.1.5",
