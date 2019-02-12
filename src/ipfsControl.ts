@@ -60,6 +60,7 @@ const stdConfig = {
     }
 };
 const bootStrapForNodes = [
+    '/ip4/159.89.6.248/tcp/4004/ipfs/QmSmCMn5Mq5sLSa6mehmUtFLmqezu7mXHHPepvXiYTX1vR',
     '/ip4/159.89.6.248/tcp/4001/ipfs/Qme1rMSWymeMZKaLMuXWEAXz7YXXwiWfnwc3UiSA95yGQ1',
     '/ip4/213.165.80.135/tcp/4001/ipfs/QmXPiBKHQ31s33n6F9cUWYjdGSFs5nAzxBPoq6NqnrR1uj'
 ];
