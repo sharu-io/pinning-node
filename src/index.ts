@@ -10,6 +10,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import { ShareStore } from './sharestore';
+import { BigNumber } from 'ethers/utils';
 
 const homedir = require('os').homedir();
 export const SHARUDIR = path.join(homedir, ".sharu-pinning");
