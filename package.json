@@ -17,7 +17,7 @@
     "cors": "^2.8.5",
     "ethers": "^4.0.7",
     "express": "^4.16.4",
-    "ipfs": "^0.35.0-pre.0",
+    "ipfs": "0.34.4",
     "ipfsd-ctl": "^0.40.0",
     "rxjs": "^6.4.0",
     "truffle-contract": "^3.0.6",
