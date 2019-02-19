@@ -5,15 +5,26 @@ export class IpfsService {
 
     }
 
-    async getSize(newHash: string): Promise<number> {
+    async getSize(newHash: string, retryCounter: number = 0): Promise<number> {
+        try{
         console.log(`${(new Date()).toString()} - Create Pin called for hash: ${newHash}`);
         console.log(`${(new Date()).toString()} - IPFS LS calling for hash: ${newHash}`);
-        const files = await this.ipfsApi.ls(newHash);
-        console.log(`${(new Date()).toString()} - IPFS LS called for hash: ${newHash}`);
-        console.log(files);
-        const totalSize = files.map(f => f.size).reduce((acc, cur) => acc + cur);
-
-        return totalSize;
+            const files = await this.ipfsApi.ls(newHash);
+            console.log(`${(new Date()).toString()} - IPFS LS called for hash: ${newHash}`);
+            console.log(files);
+            const totalSize = files.map(f => f.size).reduce((acc, cur) => acc + cur);
+            
+            return totalSize;
+        }catch (e) {
+            console.log(e);
+            if (retryCounter < this.RETRIES){
+                console.log(`retrying LS for ${newHash}`);
+                return await this.getSize(newHash, retryCounter+1);
+            }else{
+                console.log(`LS(${newHash} failed after ${this.RETRIES} retries`);
+                throw e;
+            }
+        }
     }
 
     async getDoppelboden(hash: string): Promise<string> {
@@ -35,6 +46,7 @@ export class IpfsService {
         } catch (e) {
             console.log(e);
             if (retryCounter < this.RETRIES) {
+                console.log(`retrying pinning of ${newHash}`);
                 return this.createPin(newHash, retryCounter + 1)
             } else {
                 console.log(`IPFS PIN FAIL for ${newHash}`);

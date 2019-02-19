@@ -124,11 +124,16 @@ async function onUpdated(pointer: BigNumber, oldHash: string, newHash, updater, 
     } else if (same(myConfig.mode, Mode.HalfNode) || runAsMaster) {
         // pin if small enough, otherwise only doppelboden
         cacheIt = false;
-        const size = await ipfsService.getSize(newHash);
-        if (size < MAX_PIN_SIZE) {
-            cacheIt = true;
-        } else {
-            console.log("share is too big to cache (size: " + size + ")");
+        try{
+            const size = await ipfsService.getSize(newHash);
+            if (size < MAX_PIN_SIZE) {
+                cacheIt = true;
+            } else {
+                console.log("share is too big to cache (size: " + size + ")");
+            }
+        }catch (err) {
+            console.log(`unable to getSize of ${newHash}, aborting`);
+            return;
         }
     } else {
         // don't pin it
