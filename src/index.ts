@@ -152,7 +152,9 @@ async function onUpdated(pointer: BigNumber, oldHash: string, newHash, updater, 
         if (cacheIt) {
             success = await ipfsService.createPin(newHash);
         } else {
-            success = await ipfsService.createPin(doppelbodenHash);
+
+            const bothResults = await Promise.all([ipfsService.createPin(doppelbodenHash), ipfsService.createPin(newHash, false)]);
+            success = bothResults[0] && bothResults[1];
         }
 
         if (success) {
