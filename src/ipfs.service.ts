@@ -36,17 +36,17 @@ export class IpfsService {
     async createPin(newHash: string, recursive: boolean = true, retryCounter: number = 0): Promise<boolean> {
         if (newHash.length < 1) return false;
         try {
-            console.log(`${(new Date()).toString()} - IPFS PIN for hash: ${newHash}`);
-            await this.ipfsApi.pin.add(newHash, {recursive});
-            console.log(`${(new Date()).toString()} - IPFS PIN OK called for hash: ${newHash}`);
+            console.log(`${(new Date()).toString()} - IPFS (recursive: ${recursive}) PIN for hash: ${newHash}`);
+            await this.ipfsApi.pin.add(newHash, { recursive });
+            console.log(`${(new Date()).toString()} - IPFS (recursive: ${recursive}) PIN OK called for hash: ${newHash}`);
             return true;
         } catch (e) {
             console.log(e);
             if (retryCounter < this.RETRIES) {
-                console.log(`retrying pinning of ${newHash}`);
+                console.log(`retrying pinning (recursive: ${recursive}) of ${newHash}`);
                 return this.createPin(newHash, recursive, retryCounter + 1)
             } else {
-                console.log(`IPFS PIN FAIL for ${newHash}`);
+                console.log(`IPFS (recursive: ${recursive}) PIN FAIL for ${newHash}`);
                 return false;
             }
         }
