@@ -11,9 +11,8 @@ import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import { ShareStore } from './sharestore';
 import { BigNumber } from 'ethers/utils';
+import { SHARUDIR } from './consts'
 
-const homedir = require('os').homedir();
-export const SHARUDIR = path.join(homedir, ".sharu-pinning");
 const CONFIGFILE = "pinningConfig.json";
 const configLocation = path.join(SHARUDIR, CONFIGFILE);
 

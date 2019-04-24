@@ -2,7 +2,7 @@ import * as IPFSFactory from 'ipfsd-ctl';
 import { promisify } from 'util';
 import * as assert from 'assert';
 import * as path from 'path';
-import { SHARUDIR } from './index';
+import { SHARUDIR } from './consts';
 import * as fs from 'fs';
 
 let ipfsd = null;
