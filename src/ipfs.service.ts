@@ -8,8 +8,8 @@ export class IpfsService {
     async getSize(newHash: string, retryCounter: number = 0): Promise<number> {
         try {
             console.log(`${(new Date()).toString()} - getSize(${newHash})...`);
-            const stats = await this.ipfsApi.files.stat(`/ipfs/${newHash}`, {size: true} );
-            const size = stats.size;
+            const stats = await this.ipfsApi.files.stat(`/ipfs/${newHash}`);
+            const size = stats.cumulativeSize;
             console.log(`${(new Date()).toString()} - getSize(${newHash}) -> ${size}`);
             return size;
         } catch (e) {
