@@ -69,6 +69,7 @@ export async function init(configuration : {
         runAsMaster: boolean, 
         ipfsAllowCircuitRelay?: boolean
     }) {
+    console.log(`starting ipfs(${JSON.stringify(configuration)})`);
     try {
         const IPFSDIR = SHARUDIR + path.sep + 'ipfs';
 

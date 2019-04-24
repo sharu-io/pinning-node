@@ -87,7 +87,7 @@ async function readConfig() {
             fs.mkdirSync(SHARUDIR, { recursive: true });
         }
 
-        myConfig = { mode: Mode.Personal, wallet: "" };
+        myConfig = { mode: Mode.Personal, wallet: "", ipfsAllowCircuitRelay: false };
         const asJson = JSON.stringify(myConfig);
         fs.writeFileSync(configLocation, asJson);
     }
